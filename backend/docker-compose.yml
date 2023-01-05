@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  db:
+    container_name: postgres
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: toto
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB:  
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+
+    ports:
+      - "5432:5432"
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@esgi.fr
+      PGADMIN_DEFAULT_PASSWORD: myadminpassword
+    ports:
+      - "5050:80"
