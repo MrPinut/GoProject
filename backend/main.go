@@ -205,12 +205,32 @@ func main() {
 		}
 
 		//structure.FieldMap[translationKeys[0]].
-		val1, _ := strconv.Atoi(tempo.FieldMap[translationKeys[0]].ActualPrice[0])
-		val2, _ := strconv.Atoi(tempo.FieldMap[translationKeys[0]].Volume[0])
-		val3, _ := strconv.Atoi(tempo.FieldMap[translationKeys[0]].High[0])
-		val4, _ := strconv.Atoi(tempo.FieldMap[translationKeys[0]].Low[0])
-		val5, _ := strconv.Atoi(tempo.FieldMap[translationKeys[0]].OpeningPrice)
-		sqlStatement := fmt.Sprintf("INSERT INTO coins (id, altname, status,token1,token2,ActualPrice,Volume,High, Low, Open) VALUES (%d, '%s', '%s', '%s', '%s', %d, %d, %d, %d, %d)", a, structure.FieldMap[translationKeys[0]].Altname, structure.FieldMap[translationKeys[0]].PairStatus, structure.FieldMap[translationKeys[0]].Token1, structure.FieldMap[translationKeys[0]].Token2, val1, val2, strconv.Atoi(tempo.FieldMap[translationKeys[0]].High[0]), val3, val4)
+
+		fmt.Println(tempo.FieldMap[translationKeys[0]].ActualPrice[0])
+
+		val1, error := strconv.ParseFloat(tempo.FieldMap[translationKeys[0]].ActualPrice[0], 64)
+		if error != nil {
+			panic(error)
+		}
+		val2, error := strconv.ParseFloat(tempo.FieldMap[translationKeys[0]].Volume[0], 64)
+		if error != nil {
+			panic(error)
+		}
+		val3, error := strconv.ParseFloat(tempo.FieldMap[translationKeys[0]].High[0], 64)
+		if error != nil {
+			panic(error)
+		}
+		val4, error := strconv.ParseFloat(tempo.FieldMap[translationKeys[0]].Low[0], 64)
+		if errors != nil {
+			panic(error)
+		}
+		val5, error := strconv.ParseFloat(tempo.FieldMap[translationKeys[0]].OpeningPrice, 64)
+		if errors != nil {
+			panic(error)
+		}
+		fmt.Println(val2)
+
+		sqlStatement := fmt.Sprintf("INSERT INTO coins (id, altname, status,token1,token2,ActualPrice,Volume,High, Low, Open) VALUES (%d, '%s', '%s', '%s', '%s', %f, %f, %f, %f, %f)", a, structure.FieldMap[translationKeys[0]].Altname, structure.FieldMap[translationKeys[0]].PairStatus, structure.FieldMap[translationKeys[0]].Token1, structure.FieldMap[translationKeys[0]].Token2, val1, val2, val3, val4, val5)
 		_, err := db.Exec(sqlStatement)
 		if err != nil {
 			fmt.Println(err)
